@@ -312,14 +312,14 @@ def find_amenities(addys, api_key, interests, radius=5000, resolution=None):
 
     
 # test input params
-addys = ["541 Luckie St NW, Atlanta, GA 30313" # Coke Headquarters
+addys = ["541 Luckie St NW, Atlanta, GA 30313" # Coca-cola 
          ,"2455 Paces Ferry Road Northwest, Atlanta, GA 30339" # Home Depot
-         #,"1030 Delta Blvd, Hapeville, GA 30354" # Delta
+         ,"1030 Delta Blvd, Hapeville, GA 30354" # Delta
          ,"6655 Peachtree Dunwoody Rd, Atlanta, GA 30328" # Newell 
          ,"55 Glenlake Pkwy NE, Atlanta, GA 30328" # UPS
          ]
 
-api_key = "6ce049e5c8dc4935acc2e4027ef790ae"
+api_key = ew-api-key
 
 interests = ['conference_centre', 'events_venue']
 
