@@ -1,0 +1,77 @@
+---
+title: "donut decay"
+author: "EW"
+date: '2023-05-04'
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+# Create vectors for each column
+n <- 10
+type <- c(rep("Britts", n), rep("Cake", n), rep("Yeast", n))
+time <- c(rep(c(1, 5, 10, 30, 60, 120, 240, 720, 1440, 4320), 3))
+
+# Quality is subjective, 1 is best, 0 is inedible 
+quality <- c(c(1, .9, .4, .2, .08, .05, .04, .02, .02, 0), # Britts quality
+             c(.7, .7, .7, .7, .7, .65, .62, .60, .58, .5), # Dunkin quality
+             c(.85, .8, .75, .65, .6, .5, .4, .3, .2, .05))
+
+# Combine the vectors into a dataframe
+df <- data.frame(type, time, quality)
+
+#set colors
+my_colors <- brewer.pal(n = n_distinct(df$type), name = "Dark2")
+
+```
+
+```{r}
+# No transformation
+
+label_df <- df %>%
+  group_by(type) %>%
+  slice(n = 9) %>%
+  summarize(label_time = time, label_quality = quality)
+
+
+# Plot the dataframe
+ggplot(df, aes(x = time, y = quality, color = type)) +
+  geom_line() +
+  scale_color_manual(values = my_colors) +
+  geom_text(data = label_df, aes(x = label_time, y = label_quality, label = type),
+            hjust = 0.5, vjust = -0.5, size = 5, color = "black") +
+  labs(x = "Minutes (not scaled)", y = "Quality", color = "Type of Donut", title = "Donut Quality over Time") +
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+ggsave("donuts1.jpg")
+```
+
+
+```{r}
+
+label_df <- df %>%
+  group_by(type) %>%
+  slice(n = 7) %>%
+  summarize(label_time = time, label_quality = quality)
+
+ggplot(df, aes(x = time, y = quality, color = type)) +
+  geom_line() +
+  scale_color_manual(values = my_colors) +
+  geom_text(data = label_df, aes(x = label_time, y = label_quality, label = type),
+            hjust = 0.2, vjust = -0.5, size = 5, color = "black") +
+  scale_x_log10(
+    #breaks = c(0, 1, 1.778, 2.38, 3.158, 3.635),
+    breaks = c(1, 10, 60, 240, 1440, 4320),
+    labels = c("1 Minute", "10 Minutes", "1 Hour", "4 Hours", "1 day", "3 days")
+  ) + 
+  labs(x = "Time (log scaled)", y = "Quality", color = "Type of Donut", title = "Donut Quality over Time") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+ggsave("donut2.jpg")
+
+```

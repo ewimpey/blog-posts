@@ -1,0 +1,38 @@
+---
+title: "sim-gender"
+author: "EW"
+date: '2023-07-27'
+output: html_document
+---
+
+```{r}
+
+# Set parameters
+total_people <- 16
+total_males <- 8
+total_non <- total_people - total_males
+days_per_week <- 2
+prob_in_office <- days_per_week / 5  # probability of a person being in office
+
+total_days <- 10000  # number of days to simulate
+# Initialize count
+count <- 0
+
+# Simulate over total_days
+for (i in 1:total_days) {
+  # Determine whether each person is in the office
+  males_in_office <- rbinom(1, total_males, prob_in_office)
+  others_in_office <- rbinom(1, total_non, prob_in_office)
+  
+  # Check for 5+ people and only 1 male in the office
+  if ((males_in_office == 1) & (males_in_office + others_in_office >= 5)) {
+    count <- count + 1
+  }
+}
+
+# Proportion of days with at least 5 people and only 1 male
+proportion <- count / total_days
+print(proportion)
+
+
+```
