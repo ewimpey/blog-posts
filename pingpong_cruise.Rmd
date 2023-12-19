@@ -1,0 +1,233 @@
+---
+title: "ping-pong"
+author: "EW"
+date: '2022-04-22'
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(sigmoid)
+
+## 16 players with various 'skill levels'
+players <- letters[1:16]
+skills <- rnorm(n = 16, sd = .8)
+opps <- players[1:length(players) + c(1, -1)]
+
+# simulate a single point
+sim_point <- function(p1, p2, skills){
+  p1 = skills[which(players == p1)]
+  p2 = skills[which(players == p2)]
+  p = sigmoid(p1 - p2)
+  m = runif(1)
+  return(p > m)
+}
+
+#simulate a game to 12
+sim_game <- function(p1, p2, skills){
+  # Start at 0-0
+  p1_score = 0
+  p2_score = 0
+  
+  # Keep playing until someone has 12
+  while(p1_score < 12 & p2_score < 12){
+    point = sim_point(p1, p2, skills)
+    if(point){
+      p1_score = p1_score + 1
+    }
+    else{
+      p2_score = p2_score + 1
+    }
+  }
+  
+  # Output the winner and the scores
+  winner = ifelse(p1_score >p2_score, p1, p2)
+  w = c(winner, max(p1_score, p2_score), min(p1_score, p2_score))
+  return(w)
+}
+
+```
+
+Simulate first round to see rank of a 12-10 loser
+
+
+```{r}
+# simulate a tournament
+sim_first <- function(verbose = FALSE){
+  skills <- rnorm(n = 16, sd = 0.6)
+  
+  # first round
+  g1 <- sim_game(players[1], players[2], skills)
+  g2 <- sim_game(players[3], players[4], skills)
+  g3 <- sim_game(players[5], players[6], skills)
+  g4 <- sim_game(players[7], players[8], skills)
+  g5 <- sim_game(players[9], players[10], skills)
+  g6 <- sim_game(players[11], players[12], skills)
+  g7 <- sim_game(players[13], players[14], skills)
+  g8 <- sim_game(players[15], players[16], skills)
+  first_round <- data.frame(t(data.frame(g1, g2, g3, g4, g5, g6, g7, g8)))
+
+  good_losers <- first_round %>% 
+    filter(X3 == 10) %>%
+    pull(X1)
+  
+  loser_rank_list = c()
+  for (jerk in good_losers){
+    loser = opps[which(players == jerk)]
+    loser_rank <- rank(-skills)[which(players == loser)]
+    loser_rank_list = c(loser_rank_list, loser_rank)
+  }
+  
+  return(loser_rank_list)
+}
+
+sim.size = 100
+loser_dist = c()
+
+for(i in 1:sim.size){
+  t <- sim_first()
+  
+  loser_dist <- c(loser_dist, t)
+}
+
+
+ggplot() + aes(loser_dist) + 
+  geom_histogram(binwidth = 1) + 
+  theme_minimal() + 
+  xlab("Rank of the First Round 12-10 Loser") +
+  ylab(element_blank()) + 
+  ggtitle("How did Evan rank?")
+```
+
+
+Simulate a full tournament
+```{r}
+
+# simulate a tournament
+sim_tournament <- function(verbose = FALSE){
+  skills <- rnorm(n = 16, sd = 0.6)
+  
+  # first round
+  g1 <- sim_game(players[1], players[2], skills)
+  g2 <- sim_game(players[3], players[4], skills)
+  g3 <- sim_game(players[5], players[6], skills)
+  g4 <- sim_game(players[7], players[8], skills)
+  g5 <- sim_game(players[9], players[10], skills)
+  g6 <- sim_game(players[11], players[12], skills)
+  g7 <- sim_game(players[13], players[14], skills)
+  g8 <- sim_game(players[15], players[16], skills)
+  first_round <- data.frame(t(data.frame(g1, g2, g3, g4, g5, g6, g7, g8)))
+  
+  # quarter finals
+  g9 <- sim_game(g1[1], g2[1], skills)
+  g10 <- sim_game(g3[1], g4[1], skills)
+  g11 <- sim_game(g5[1], g6[1], skills)
+  g12 <- sim_game(g7[1], g8[1], skills)
+  
+  # semi finals
+  g13 <- sim_game(g9[1], g10[1], skills)
+  g14 <- sim_game(g11[1], g12[1], skills)
+  
+  # finals
+  g15 <- sim_game(g13[1], g14[1], skills)
+  
+  # how good was the champion?
+  champ_rank <- rank(-skills)[which(players == g15[1])]
+  
+  # how good was the champion's first round opponent?
+  first_rd_loser = opps[which(players == g15[1])]
+  loser_rank <- rank(-skills)[which(players == first_rd_loser)]
+  
+  # how many points did the first loser score?
+  pts = as.numeric(first_round %>% filter(X1 == g15[1]) %>% select(X3))
+  
+  # how many points did the championship game loser score?
+  last_loser = as.numeric(g15[3])
+  
+  stuff <- c(champ_rank, loser_rank, pts, last_loser)
+  return(stuff)
+}
+
+sim_tournament()
+```
+
+
+
+```{r}
+
+# Simulate many tournaments
+sim.size = 1000
+results <- data.frame(matrix(ncol = 4, nrow = 0))
+
+for(i in 1:sim.size){
+  t <- sim_tournament()
+  
+  results <- rbind(results, t)
+}
+
+colnames(results) <- c("winner_rank", "first_round_loser_rank", "first_round_loser_pts", "champ_loser_points")
+
+results %>% filter(first_round_loser_pts == 10,
+                   champ_loser_points == 6) %>%
+  ggplot(aes(first_round_loser_rank)) + 
+  geom_histogram(aes(y = ..count../sum(..count..)*100), binwidth = 1) + 
+  theme_minimal() + 
+  xlab("Rank of the First Round loser") +
+  ylab(element_blank()) + 
+  ggtitle("How did Evan rank?")
+```
+
+```{r}
+results %>% filter(first_round_loser_pts == 10,
+                   champ_loser_points == 6) %>%
+  ggplot(aes(first_round_loser_rank)) + 
+  geom_histogram(aes(y = ..count../sum(..count..)*100), binwidth = 1) + 
+  theme_minimal() + 
+  xlab("Rank of the First Round loser") +
+  ylab(element_blank()) + 
+  ggtitle("How did Evan rank?")
+
+```
+
+```{r}
+
+# Are parameters reasonable? 
+# How often does best player win the tournament?
+
+results %>% #filter(first_round_loser_pts == 10) %>%
+  ggplot(aes(winner_rank)) + 
+  geom_histogram(aes(y = ..count../sum(..count..)*100), binwidth = 1) + 
+  theme_minimal() + 
+  xlab("Winner rank") +
+  ylab("Percent") + 
+  ggtitle("How does the tournament champion rank?")
+
+
+# What is the average score in a game?
+score <- c()
+for (i in 1:sim.size){
+  skills <- rnorm(n = 16, sd = .6)
+  t <- sim_game(players[3], players[8], skills)
+  pts <- as.numeric(t[3])
+  score <- c(score, pts)
+}
+
+summary(score)
+```
+
+
+
+
+```{r}
+mfg_a <- rnorm(100, 100, 5)
+mfg_b <- rnorm(100, 100, 25)
+
+df <- data.frame(mfg_a, mfg_b) %>% pivot_longer(cols = c(mfg_a, mfg_b))
+
+ggplot(df, aes(value)) +
+  geom_density(aes(fill = name), alpha = 0.3) + 
+  labs(title = "Warehouse Forecasts", x = "Units", y = element_blank(), fill = element_blank()) +
+  scale_fill_manual(labels = c("Warehouse A", "Warehouse B"), values = c("blue", "red")) + 
+  theme(axis.text.y = element_blank())
+
+```
