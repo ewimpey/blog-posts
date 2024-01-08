@@ -22,6 +22,10 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2024-01-03
+    * https://www.linkedin.com/posts/evan-wimpey_python-datacomedy-newyear-activity-7147991257296904193-czxg?utm_source=share&utm_medium=member_desktop
+    * `newyear-update.py`
+    * Snarky python function to update hard coded date in python files each new year
 * 2023-12-01:
     * https://www.linkedin.com/posts/evan-wimpey_datascience-machinelearning-candy-activity-7136394193161129984-er04?utm_source=share&utm_medium=member_desktop
     * `assymetric-loss.py`
