@@ -1,0 +1,106 @@
+---
+title: "simpsons paradox"
+author: "EW"
+date: '2024-01-24'
+output: html_document
+---
+
+```{r}
+library(baseballr)
+library(dplyr)
+```
+
+
+
+Finding Simpson's Paradox in Major League Baseball batting averages. 
+
+Should be able to parameterize AVG, AB, and H to generalize this to anything, although formulas will need to change.
+```{r}
+#Retrieve and Preprocess Data using baseballr
+get_batters_data <- function(year, qual = 1, min_ab=200) {
+  fg_batter_leaders(startseason = as.character(year),
+                    endseason = as.character(year),
+                    qual = qual) %>%
+    select(Season, PlayerNameRoute, playerid, AB, H, AVG) %>%
+    filter(AB > min_ab)
+}
+
+# Function to Calculate Combined Statistics
+calculate_combined_stats <- function(dataframes_list) {
+  combined_batters <- Reduce(function(x, y) full_join(x, y, by = c("playerid", "PlayerNameRoute")), dataframes_list)
+  
+  combined_batters <- combined_batters %>%
+    rowwise() %>%
+    mutate(Total_AB = sum(c_across(starts_with("AB")), na.rm = TRUE),
+           Total_H = sum(c_across(starts_with("H")), na.rm = TRUE),
+           Combined = round(Total_H / Total_AB, 3))
+  
+  return(combined_batters)
+}
+
+
+# Function to Identify Simpson's Paradox Cases
+find_simpsons_paradox <- function(combined_batters) {
+  df <- na.omit(combined_batters)
+
+  avg_columns <- grep("^AVG", names(df), value = TRUE)
+  
+  result_df <- data.frame()
+  
+  # Iterate over each pair of players
+  for (i in 1:(nrow(df) - 1)) {
+    for (j in 1:nrow(df)) {
+      player1 <- df[i, ]
+      player2 <- df[j, ]
+  
+      # Check conditions
+      if (player1$Combined > player2$Combined) {
+        avg_condition <- all(sapply(avg_columns, function(col) player1[[col]] <= player2[[col]]))
+  
+         if (avg_condition) {
+          # Prepare a row to add to the result dataframe
+          player_comparison <- c(Player1 = player1$PlayerNameRoute, Player1_Combined = player1$Combined,
+                                 Player2 = player2$PlayerNameRoute, Player2_Combined = player2$Combined)
+  
+          # Append AVG columns for both players
+          for (col in avg_columns) {
+            player_comparison[paste0(col, "_1")] <- player1[[col]]
+            player_comparison[paste0(col, "_2")] <- player2[[col]]
+          }
+  
+          # Add to result dataframe
+          result_df <- rbind(result_df, player_comparison)
+          }
+        }
+      }
+    }
+  
+  
+  colnames(result_df) <- c("Player1", "Player1_Combined_Average", "Player2", "Player2_Combined_Average", 
+                           paste0(avg_columns, "_1"), paste0(avg_columns, "_2"))
+  
+  return(result_df)
+}
+
+
+
+# Main Function
+find_simpsons_paradox_in_baseball <- function(start_year, num_years, min_ab) {
+  dataframes_list <- lapply(start_year:(start_year + num_years - 1), function(year) get_batters_data(year, min_ab = min_ab))
+  combined_batters <- calculate_combined_stats(dataframes_list)
+  results <- find_simpsons_paradox(combined_batters)
+  return(results)
+}
+
+
+```
+
+
+```{r}
+t <- find_simpsons_paradox_in_baseball(start_year = 1998, num_years = 3, min_ab = 100)
+
+print(t)
+```
+
+
+

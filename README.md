@@ -22,6 +22,10 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2024-01-24
+    * https://www.linkedin.com/posts/evan-wimpey_rstats-statistics-dataanalysis-activity-7155958699126087680-ZkFq?utm_source=share&utm_medium=member_desktop
+    * `simpsons_paradox.Rmd`
+    * Find examples of Simpson's Paradox in MLB
 * 2024-01-03
     * https://www.linkedin.com/posts/evan-wimpey_python-datacomedy-newyear-activity-7147991257296904193-czxg?utm_source=share&utm_medium=member_desktop
     * `newyear-update.py`
