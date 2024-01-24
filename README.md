@@ -1,6 +1,6 @@
 # blog-posts
 
-I regularly post on LinkedIn or write blog posts for various publications. These writings often come with code or visualizations to help support. This repository keeps track of all of that code (that I care to share).
+I regularly post on LinkedIn or write blog posts for various publications. These writings often come with code or visualizations to help support. This repository keeps track of all of that code (that I care to share). 
 
 Here's a timeline based on the medium:
 
