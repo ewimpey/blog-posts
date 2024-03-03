@@ -22,6 +22,10 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2024-03-03
+    * [link]
+    * `regression-scratch.R`, `regression-scratch.ipynb`, `regression-w-np.ipynb`
+    * Code linear regression from scratch with base R, base python, and python with numpy
 * 2024-01-24
     * https://www.linkedin.com/posts/evan-wimpey_rstats-statistics-dataanalysis-activity-7155958699126087680-ZkFq?utm_source=share&utm_medium=member_desktop
     * `simpsons_paradox.Rmd`
