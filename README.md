@@ -23,7 +23,7 @@ Here's a timeline based on the medium:
 
 ## LinkedIn Posts
 * 2024-03-03
-    * [link]
+    * https://www.linkedin.com/posts/evan-wimpey_rstats-python-linearregression-activity-7170410173084213248-1aiU?utm_source=share&utm_medium=member_desktop
     * `regression-scratch.R`, `regression-scratch.ipynb`, `regression-w-np.ipynb`
     * Code linear regression from scratch with base R, base python, and python with numpy
 * 2024-01-24
