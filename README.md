@@ -22,6 +22,18 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2024-06-28
+    * https://www.linkedin.com/posts/evan-wimpey_sales-marketing-confernce-activity-7212447152634015748-Bs99?utm_source=share&utm_medium=member_desktop
+    * `sales-emails.ipynb`
+    * Exploring received emails using the `mailbox`  package in python
+* 2024-06-20
+    * https://www.linkedin.com/posts/evan-wimpey_pulp-python-optimization-activity-7209540523445923841-Sz63?utm_source=share&utm_medium=member_desktop
+    * `swim-opt.ipynb`
+    * Using pulp to optimize swim relay teams in python
+* 2024-05-22
+    * https://www.linkedin.com/posts/evan-wimpey_datascience-analytics-statisticalsignificance-activity-7198668912593354752-MCYN/?utm_source=share&utm_medium=member_desktop
+    * `random-baseball.ipynb`
+    * Applying, and misapplying, target shuffling to test whether a team's record is pure luck
 * 2024-03-03
     * https://www.linkedin.com/posts/evan-wimpey_rstats-python-linearregression-activity-7170410173084213248-1aiU?utm_source=share&utm_medium=member_desktop
     * `regression-scratch.R`, `regression-scratch.ipynb`, `regression-w-np.ipynb`
