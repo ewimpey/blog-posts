@@ -22,6 +22,10 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2024-07-17
+    * https://www.linkedin.com/posts/evan-wimpey_github-influencer-python-activity-7219367734856302593-5QNU?utm_source=share&utm_medium=member_desktop
+    * `repo-finder.py`
+    * Finds github repositories with a specific number of stars
 * 2024-06-28
     * https://www.linkedin.com/posts/evan-wimpey_sales-marketing-confernce-activity-7212447152634015748-Bs99?utm_source=share&utm_medium=member_desktop
     * `sales-emails.ipynb`
