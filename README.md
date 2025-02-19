@@ -22,6 +22,12 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2025-02-18
+    * https://www.linkedin.com/posts/evan-wimpey_mlbayes-activity-7297647877655347200-GOrk?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
+    * https://www.linkedin.com/posts/evan-wimpey_mlbayes-activity-7296166397364064256-3pJj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
+    * https://www.linkedin.com/posts/evan-wimpey_mlbayes-mlbayes-activity-7295809053451059200-GFV1?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
+    * `gradients-galore.ipynb`
+    * Compares optimization in ML to sampling in Bayesian modeling
 * 2024-07-17
     * https://www.linkedin.com/posts/evan-wimpey_github-influencer-python-activity-7219367734856302593-5QNU?utm_source=share&utm_medium=member_desktop
     * `repo-finder.py`
