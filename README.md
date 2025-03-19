@@ -22,6 +22,10 @@ Here's a timeline based on the medium:
     * Simulation using R to draw inferences with small data, codifying assumptions 
 
 ## LinkedIn Posts
+* 2025-03-19
+    * https://www.linkedin.com/posts/evan-wimpey_statistics-selfies-berksonsparadox-activity-7308145428808519680-RuMT?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
+    * `thirst-trap-berkson.ipynb`
+    * Berkson's Paradox explained through LinkedIn influencers
 * 2025-02-18
     * https://www.linkedin.com/posts/evan-wimpey_mlbayes-activity-7297647877655347200-GOrk?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
     * https://www.linkedin.com/posts/evan-wimpey_mlbayes-activity-7296166397364064256-3pJj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAnj3YQBS11vTsLz5Fso1mEKgs4S6fEXPlY
